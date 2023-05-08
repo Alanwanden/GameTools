@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    public Texture2D texture2D;
+    public Texture2D portrait;
     public Color color;
-    public string nick = "objectName";
+    public string nickname = "objectName";
     public PlayerController playerController;
 
 }
