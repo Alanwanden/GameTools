@@ -9,7 +9,7 @@ public class CreateCharacterWizard : ScriptableWizard
     public Texture2D portraitTexture;
     public Color color;
     public string nickname="default";
-    
+    private Rigidbody rb;
     [MenuItem("GameTools/CreateCharacterWizard")]
     static void CreateWizard()
     {
@@ -28,6 +28,10 @@ public class CreateCharacterWizard : ScriptableWizard
         PlayerController playerController = characterGO.AddComponent<PlayerController>();
         characterComponent.playerController = playerController;
         characterGO.name = nickname;
+        characterGO.AddComponent<Rigidbody>();
+        rb = characterGO.GetComponent<Rigidbody>();
+        rb.useGravity = false;
+
         characterGO.tag="enemy";
         
     }
