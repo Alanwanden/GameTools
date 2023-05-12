@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 {
     private InputsActions input = null;
     private Vector3 moveVector = Vector3.zero;
+    private Vector3 moveConvert;
     private Rigidbody rb;
     public float moveSpeed = 2f;
     private void Awake()
@@ -21,12 +22,13 @@ public class PlayerController : MonoBehaviour
         input.Enable();
         input.Player.Movement.performed += OnMovementPerformed;
         input.Player.Movement.canceled += OnMovementCanceled;
+        
 
     }
 
     private void FixedUpdate()
     {
-        rb.velocity = moveVector*moveSpeed*Time.fixedDeltaTime;
+        rb.velocity = moveConvert*moveSpeed*Time.fixedDeltaTime;
     }
 
     private void OnDisable()
@@ -41,6 +43,7 @@ public class PlayerController : MonoBehaviour
     private void OnMovementPerformed(InputAction.CallbackContext value)
     {
         moveVector = value.ReadValue<Vector3>();
+        moveConvert = new Vector3(moveVector.x, 0.0f, moveVector.z);
     }
     private void OnMovementCanceled(InputAction.CallbackContext value)
     {
