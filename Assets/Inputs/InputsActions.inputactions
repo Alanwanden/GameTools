@@ -211,28 +211,6 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
-                    "id": "07213de1-9460-4ec3-b1a7-5f84cf6a249d",
-                    "path": "<Joystick>/stick/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "c35362b6-2a1f-4257-a51c-e02f93827c3f",
-                    "path": "<Joystick>/stick/y",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "left",
                     "id": "61e5c7dd-8aba-401c-99eb-ce50a1d84ec9",
                     "path": "<Joystick>/stick/left",
@@ -279,7 +257,29 @@
                 {
                     "name": "",
                     "id": "cb6bec8b-c0af-468d-87b5-d997bd110ce0",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f0df9083-ddd4-47fe-8ab6-1c94f6d81c0c",
                     "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6b7297ff-6eaf-4ded-967d-3f7a330ade8c",
+                    "path": "<Touchscreen>/touch1/press",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
