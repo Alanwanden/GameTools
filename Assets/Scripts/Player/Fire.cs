@@ -6,6 +6,9 @@ using UnityEngine.InputSystem;
 public class Fire : MonoBehaviour
 {
     private InputsActions input = null;
+    public GameObject Projecticlie;
+    public Transform pos;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -24,7 +27,7 @@ public class Fire : MonoBehaviour
     }
     void Start()
     {
-        
+        pos = this.transform;
     }
 
     // Update is called once per frame
@@ -32,8 +35,10 @@ public class Fire : MonoBehaviour
     {
         
     }
+    [ContextMenu("FireAction")]
     private void OnFire(InputAction.CallbackContext context)
     {
         Debug.Log("Firing");
+        Instantiate(Projecticlie,pos.position,pos.rotation);
     }
 }
