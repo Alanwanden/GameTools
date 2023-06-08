@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using Unity.VisualScripting;
+
 [CustomEditor(typeof(ObjectBuilder))]
 public class SpawnObjectController : Editor
 {
@@ -13,6 +15,11 @@ public class SpawnObjectController : Editor
         {
             builder.SpawnObj();
         }
+        if(GUILayout.Button("is it 2d"))
+        {
+            Debug.Log("works");
+        }
+        
     }
 
 }
