@@ -10,6 +10,7 @@ public class CreateCharacterWizard : ScriptableWizard
     public Color color;
     public string nickname="default";
     private Rigidbody rb;
+   
     [MenuItem("GameTools/CreateCharacterWizard")]
     static void CreateWizard()
     {
