@@ -5,6 +5,7 @@ using UnityEditor;
 using PlasticGui.WorkspaceWindow.CodeReview;
 using System.Runtime.Remoting.Messaging;
 using Types;
+using UnityEngine.Rendering;
 
 public class EnemeyCreator : EditorWindow
 {
@@ -22,9 +23,9 @@ public class EnemeyCreator : EditorWindow
     static RogueData rogueData;
 
 
-    public static MageData mageInfo  {get { return mageData; }}
-    public static WoriorData woriorInfo { get { return woriorData; }}
-    public static RogueData rogueInfo { get { return rogueData; }}
+    public static MageData MageInfo  {get { return mageData; }}
+    public static WoriorData WoriorInfo { get { return woriorData; }}
+    public static RogueData RogueInfo { get { return rogueData; }}
     
     Color headerSectionColor=new Color(13/255,32/255,44/255,1f);
    [MenuItem("Window/EnemeyCreator")]
@@ -117,6 +118,11 @@ public class EnemeyCreator : EditorWindow
         mageData.mageWeaponType = (MageWeaponType)EditorGUILayout.EnumPopup(mageData.mageWeaponType);
      
         GUILayout.EndHorizontal();
+
+        if (GUILayout.Button("Create!",GUILayout.Height(40)))
+        {
+            GeneralSettings.OpenWindow(GeneralSettings.SettingTypes.MAGE);
+        }
         
         GUILayout.EndArea();
 
@@ -132,6 +138,11 @@ public class EnemeyCreator : EditorWindow
         GUILayout.Label("Weapon");
         woriorData.WariorWeaponType = (WariorWeaponType)EditorGUILayout.EnumPopup(woriorData.WariorWeaponType);
         GUILayout.EndHorizontal();
+
+        if (GUILayout.Button("Create!", GUILayout.Height(40)))
+        {
+            GeneralSettings.OpenWindow(GeneralSettings.SettingTypes.WARIOR);
+        }
         GUILayout.EndArea();
 
     }
@@ -152,7 +163,134 @@ public class EnemeyCreator : EditorWindow
         rogueData.RogueWeaponType = (RogueWeaponType)EditorGUILayout.EnumPopup(rogueData.RogueWeaponType);
         GUILayout.EndHorizontal();
 
+        if (GUILayout.Button("Create!", GUILayout.Height(40)))
+        {
+            GeneralSettings.OpenWindow(GeneralSettings.SettingTypes.ROGUE);
+        }
         GUILayout.EndArea();
 
     }
+}
+public class GeneralSettings:EditorWindow
+{
+    public enum SettingTypes
+    {
+        MAGE,
+        WARIOR,
+        ROGUE
+    }
+    static SettingTypes dataSetting;
+    static GeneralSettings window;
+    public static void OpenWindow(SettingTypes setting)
+    {
+        dataSetting = setting;
+        window=(GeneralSettings)GetWindow(typeof(GeneralSettings));
+        window.minSize = new Vector2(250, 200);
+        window.Show();
+    }
+    void OnGUI()
+    {
+        switch (dataSetting)
+        {
+            
+            case SettingTypes.MAGE:
+                DrawSettings((CharactersData)EnemeyCreator.MageInfo);
+                break;
+            case SettingTypes.WARIOR:
+                DrawSettings((CharactersData)EnemeyCreator.WoriorInfo);
+                break;
+            case SettingTypes.ROGUE:
+                DrawSettings((CharactersData)EnemeyCreator.RogueInfo);
+                break;
+            default:
+                break;
+        }
+    }
+    void DrawSettings(CharactersData CharData)
+    {
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Prefab");
+        CharData.prefab = (GameObject)EditorGUILayout.ObjectField(CharData.prefab, typeof(GameObject), false);
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Max Health");
+        CharData.maxHealth=EditorGUILayout.FloatField(CharData.maxHealth);
+        
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Max Energy");
+        CharData.maxEnergy=EditorGUILayout.FloatField(CharData.maxEnergy);
+       
+
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Power");
+        CharData.power = EditorGUILayout.Slider(CharData.power, 0, 100);
+       
+
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("max Speed");
+        CharData.maxSpeed = EditorGUILayout.Slider(CharData.maxSpeed,0,100);
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Name");
+        CharData.name = EditorGUILayout.TextField(CharData.name);
+        EditorGUILayout.EndHorizontal();
+
+        if (CharData.prefab == null) { EditorGUILayout.HelpBox("character Has no prefabs yet", MessageType.Warning); }
+        else if (CharData.maxHealth == 0) { EditorGUILayout.HelpBox("character has no health yet!", MessageType.Warning); }
+        else if (CharData.power ==0) { EditorGUILayout.HelpBox("character power value cant be zero!",MessageType.Warning); }
+        else if (CharData.maxEnergy == 0) { EditorGUILayout.HelpBox("character energy value cant be zero!", MessageType.Warning); }
+        else if (CharData.maxSpeed ==0) { EditorGUILayout.HelpBox("character speed value cant be zero!",MessageType.Warning); }
+        else if (CharData.name == "") { EditorGUILayout.HelpBox("character has no name yet!", MessageType.Warning); }
+        else if(GUILayout.Button("Finnis And Save"))
+        {
+            SaveCharacterData();
+            window.Close();
+        }
+    }
+    void SaveCharacterData()
+    {
+        string prefabsPath;
+        string newPrefabsPath = "Assets/GameSystem/prefabs/characterPrefabs";
+        string dataPath = "Assets/Scripts/CharactersData/";
+
+        switch (dataSetting)
+        {
+            case SettingTypes.MAGE:
+                //dataPath += "mage/" + EnemeyCreator.MageInfo.name + ".asset";
+                //AssetDatabase.CreateAsset(EnemeyCreator.MageInfo, dataPath);
+
+                //newPrefabsPath+= "mage/" + EnemeyCreator.MageInfo.name + ".prefab";
+                //prefabsPath = AssetDatabase.GetAssetPath(EnemeyCreator.MageInfo.prefab);
+                //AssetDatabase.CopyAsset(prefabsPath, newPrefabsPath);
+                //AssetDatabase.SaveAssets();
+                //AssetDatabase.Refresh();
+
+                //GameObject magePrefab=(GameObject)AssetDatabase.LoadAssetAtPath(newPrefabsPath,typeof(GameObject));
+                //if (!magePrefab.GetComponent<Mage>())
+                //{
+                //    magePrefab.AddComponent(typeof(Mage));
+
+                //}
+
+                //magePrefab.GetComponent<Mage>().mageData = EnemeyCreator.MageInfo;
+
+                break;
+            case SettingTypes.WARIOR:
+
+                break;
+            case SettingTypes.ROGUE:
+                break;
+            default:
+                break;
+        }
+    }
+
 }

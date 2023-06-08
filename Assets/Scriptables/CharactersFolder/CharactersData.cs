@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,4 +11,6 @@ public class CharactersData : ScriptableObject
     public float maxSpeed;
     public float power;
     public string _name;
+
+    
 }
